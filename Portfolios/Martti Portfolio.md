@@ -13,7 +13,7 @@ This is Martti Groenens portfolio for Applied Data Science. This is where I docu
 - [1. The Project](#the-project)
   - [Foodboost](#the-project-foodboost)
   - [Containers](#the-project-containers)
-- [2. Predictive Analysis](#predictive-models)
+- [2. Predictive Models](#predictive-models)
   - [Foodboost (PCA/Decision Tree Classifier)](#predictive-models-foodboost)
   - [Container (Reinforcement Learning)](#predictive-models-containers)
 - [3. Domain Knowledge](#domain-knowledge)
@@ -318,6 +318,20 @@ Furthermore, I also read a few articles about DQN from pytorch itself:
 * [Q-Learning](https://en.wikipedia.org/wiki/Q-learning#Deep_Q-learning)
 
 ## <a id="domain-knowledge-terminology"></a>Terminology
+<details>
+<summary>
+In the project there are some terms and jargon that might need to be explained:
+</summary>
+
+- Principal Component Analysis
+
+    Principal component analysis (PCA) is a popular technique for analyzing large datasets containing a high number of dimensions/features per observation, increasing the interpretability of data while preserving the maximum amount of information, and enabling the visualization of multidimensional data. 
+
+- Q-Learning
+    
+    Q-learning is a model-free reinforcement learning algorithm to learn the value of an action in a particular state. Thus choosing the best possible value for each action.
+    
+</details>
 
 
 [Back to Table of Contents](#table-of-contents)
@@ -410,7 +424,18 @@ To visualise the outcome of our game, I created a render of these containers.
 
 ## Presentations
 
-During this minor I have presented about 3 to 4 presentations. TODO: What were they abt and a link to the presentations 
+During this minor I have presented 5 presentations.
+
+Foodboost
+  - [Week 4](https://dehaagsehogeschool.sharepoint.com/:p:/s/MinorAppliedDataScience2022_groups-Team5/EREzdxKVfO5On9fJeAwlL3sBuM8olE7zrZ8Do1A4jiYn9Q?e=IJP1iR)
+  - [Week 6](https://dehaagsehogeschool.sharepoint.com/:p:/s/MinorAppliedDataScience2022_groups-Team5/ETyqy6lFUH1AqeimVRBNTJcBohdS_jNyWjtYnr0ejcmSTg?e=IWRUJ3)
+
+
+Container
+  - [Week 10](https://dehaagsehogeschool.sharepoint.com/:p:/s/MinorAppliedDataScience2022_groups-Team5/Ec9LBKBYu1lMvo8HDcndIxcB65UjlLZ1YoeiWidIWBcwsg?e=6HXDNE)
+  - [Week 12](https://dehaagsehogeschool.sharepoint.com/:p:/s/MinorAppliedDataScience2022_groups-Team5/EYHqzsnr5lxFpBu2vs2Kf3sBsvPgKVAjllvQ_WmBAPThVg?e=SSyPg9)
+  - [Week 16](https://dehaagsehogeschool.sharepoint.com/:p:/s/MinorAppliedDataScience2022_groups-Team5/ESHwS3fok2RDmnbv_DDdmhYBkKuxJyqDVdF3DVcNUwtLcQ?e=mFOjKu)
+
 
 ## Paper
 For our paper I wrote ``insert part here``: link to paper
