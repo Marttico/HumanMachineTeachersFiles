@@ -420,6 +420,10 @@ The second important thing our RL-agent does is it remembers its previous moves,
 To visualise the outcome of our game, I created a render of these containers.
 <video src="images/FullSolution0001-0080.mp4" controls="controls" style="max-width: 730px;"></video>
 
+Furthermore I also created a scoring algorithm to rate how optimized a layout of containers are. This scoring algorithm splits the container lot up in to its rows. For each container in this row, my algorithm determines how many containers of a lower priority or a similar priority it has to pass. My algorithm then divides this amount of containers over the amount of containers that it checked in total. Resulting in a float number from 0 to 1, where 1 is a good score and 0 is a difficult score. This is then counted towards the total score. The score then has a theoretical maximum of the product of the lots dimensions. The right graph below shows my scoring algorithm applied on our model and random chooser model.
+
+![Graph of Fourth Iteration](images/Resultaten.png)
+
 [Back to Table of Contents](#table-of-contents)
 # 5. <a id="communication"></a>Communication
 
