@@ -122,19 +122,20 @@ This method proved effective since most teammates now know the inns and outs of 
 Here are some tasks I contributed on per project:
 
 **FoodBoost**
-- [Filtered the dataset to drop recipes with nuts](Notebooks/foodboostFinal.ipynb)
-- [Applied a PCA model on our case](Notebooks/pca.ipynb)
+- [Filtered the dataset to drop recipes with nuts](#Nutsfiltercode)
+- [Applied a PCA model on our case](#PCAMissCode)
 - [Thought of a way to structure data for the final model](Notebooks/foodboostFinal.ipynb)
-- [Created a profile generator based on labels](Notebooks/userdatagenerationfoodboost.ipynb)
-- [Created the first Decision Tree Classifier we trained](Notebooks/foodboostFinal.ipynb)
+- [Created a profile generator based on labels](#profilegencode)
+- [Created the first Decision Tree Classifier we trained](#dtccode)
 
 **Containers**
 - [Created a GUI for the project using PyGame](Notebooks/contianergamesource.ipynb)
-- [Created an underlying system for moving containers and checking whether the move is legal](Notebooks/)
-- [Created a function that converts list of containers to heightmap](Notebooks/HeightMap.ipynb)
-- [Created multiple environments](Notebooks/)
+- [Created an underlying system for moving containers and checking whether the move is legal](#environmentcode)
+- [Created a function that converts list of containers to maps based on legality, height and priority](#funcmaps)
+- Created multiple environments
 - Created multiple agents [DQN](Notebooks/DQNMartti.ipynb), [CNN (with Jesse)](Notebooks/CNNJesseMartti.ipynb)
 - [Changed our observation/action space (twice)](Notebooks/DQNMartti.ipynb)
+- [Created a scoring metric](#scoringmetric)
 
 Here I will reflect on a situation using STARR:
 
@@ -158,7 +159,7 @@ I think this change was a beneficial one. Since making this change showed me tha
 
 
 [Back to Table of Contents](#table-of-contents)
-# <a id="the-project"></a>1. The Project | 100% done
+# <a id="the-project"></a>1. The Project
 There were two projects we worked on. The first project is Foodboost, and the second project is containers. I will cover both of them seperately here.
 ##  <a id="the-project-foodboost"></a>Foodboost
 Project foodboost was aimed at creating a recommendation system for users with a nut allergy. This project benefits me personally, since there's often a limited choice for me when it comes to food.
@@ -247,7 +248,7 @@ For this project we also decided on using Trello again. Eventually though, we fo
 
 
 [Back to Table of Contents](#table-of-contents)
-# <a id="predictive-models"></a>2. Predictive Models | 90% done
+# <a id="predictive-models"></a>2. Predictive Models
 
 I have made the following predictive models. I will seperate them per project.
 ## <a id="predictive-models-foodboost"></a>Project Foodboost
@@ -294,7 +295,7 @@ The Fourth iteration seemed to perform way better than all previous iterations. 
 There are two features to this graph that need some explaining. First off the theoretical maximum is based on the absolute maximum score that our environment can put out. Our model will never be able to score beyond that value. Secondly, these 79200 games took around one and a half hours to complete. This may seem long, however, this does not impact the eventual prediction speed.
 
 [Back to Table of Contents](#table-of-contents)
-# <a id="domain-knowledge"></a>3. Domain Knowledge | 70% done
+# <a id="domain-knowledge"></a>3. Domain Knowledge
 Foodboost applies data science is mainly aimed towards end users and their diets. Because we're dealing with allergens, there needs to be a clear understanding what ingredients contain nuts and which ones don't. This is why the first research question for this project is ``1. What ingredients can be considered as a nut?``. 
 
 The container project applies data science to logistics transportation. Our project is based around sorting containers in a plot, and effectively and efficiently creating a layout for this plot to reduce the time it takes to unload containers. It is imperative for this process to be efficient, since when a ship is a few minutes late, they risk getting hefty fines.
@@ -335,7 +336,7 @@ In the project there are some terms and jargon that might need to be explained:
 
 
 [Back to Table of Contents](#table-of-contents)
-# <a id="data-preprocessing"></a>4. Data Preprocessing | 80% done
+# <a id="data-preprocessing"></a>4. Data Preprocessing
 Here I will cover the data preprocessing for the two projects I've worked on.
 ## <a id="data-preprocessing-foodboost"></a>Project Foodboost
 For project Foodboost, we were given a lot of recipe data. In our case, not all of this data was useful. Eventually we ended up only using the `ingredients.csv` and `tags.csv` dataset.
@@ -439,4 +440,284 @@ Container
 
 ## Paper
 For our paper I wrote ``insert part here``: link to paper
+
+
+
+# Code snippets for contributions
+## FoodBoost
+
+### Filtered the dataset to drop recipes with nuts<a id="Nutsfiltercode"></a>
+[Source File](Notebooks/foodboostFinal.ipynb)
+```py
+def filterFunc(inputString):
+    notenLijst = ["noot","pinda","eikel","amandel","cashew","hazelno","hican","hickory","kemirie","macadamia","nangaino","parano","pecan","pistache","kastanje","walnoot","betelno","beukenno"]
+    falsePositives = ["muskaat"]
+    for i in falsePositives:
+        if i in inputString:
+            return False
+    for o in notenLijst:
+        if o in inputString:
+            return True
+    return False
+```
+
+### Applied a PCA model on our case<a id="PCAMissCode"></a>
+[Source File](Notebooks/pca.ipynb)
+```py
+def PCAMiss(X_missings, m = 2, maxIter = 1000, debug = False, exitPower = -6):
+    n = X_missings.index
+    p = X_missings.columns
+    
+    Xem = X_missings.copy().fillna(0)
+    Miss = X_missings.copy().isin([np.nan])
+    
+    #Calculate Sum-of-Squares
+    SSQ = np.nansum((X_missings) ** 2)
+    lastRSS = 1
+    if debug:
+        print("Now iterating over NaN filled matrix using PCA.\n")
+    
+    for i in range(maxIter):
+        svd = np.linalg.svd(Xem, full_matrices=False)
+        Xem_rec = np.dot(svd[0][:,:m] * svd[1][:m], svd[2][:m,:])
+        Xem = (1 - Miss) * Xem + Miss * Xem_rec
+        
+        #Calculate Residual Sum-of-Squares
+        RSS = np.nansum((X_missings - Xem_rec) ** 2) / SSQ
+        
+        if debug:
+            print("Iteration %i: RSS = %.8f, difference = %.8f"%(i, RSS, lastRSS - RSS))
+        
+        #Exit Condition
+        if (lastRSS-RSS) < (10 ** exitPower):
+            if debug:
+                print("\nFound acceptable solution within %i iterations!"%(i))
+            return pd.DataFrame(data=Xem_rec)
+        lastRSS = RSS
+    print("\n\n\nError: Reached end of max iterations without converging to successful model.")
+```
+
+### Created a profile generator based on labels<a id="profilegencode"></a>
+[Source File](Notebooks/userdatagenerationfoodboost.ipynb)
+```py
+#Wel (Italiaans)
+ItalianRecipes = tags[tags["recipe"].isin(ValidColumns.index)].loc[tags["tag"] == "italiaans"]["recipe"]
+ItalianIngredients = ValidColumns[ValidColumns.index.isin(ItalianRecipes.to_list())]
+
+#Niet (Chinees)
+ChineseRecipes = tags[tags["recipe"].isin(ValidColumns.index)].loc[tags["tag"] == "chinees"]["recipe"]
+ChineseIngredients = ValidColumns[ValidColumns.index.isin(ChineseRecipes.to_list())]
+
+#Generate X and y
+df =  pd.concat([ItalianIngredients.loc[np.random.choice(ItalianIngredients.index,30), :], ChineseIngredients.loc[np.random.choice(ChineseIngredients.index,30),:]])
+X = pd.DataFrame(data = df, columns = ValidColumns.columns)
+y = pd.DataFrame(data = [1] * 30+[0] * 30)
+
+#Generate X_train, X_test, y_train, y_test
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33)#, random_state=42)
+```
+
+### Created the first Decision Tree Classifier we trained<a id="dtccode"></a>
+[Source File](Notebooks/foodboostFinal.ipynb)
+```py
+#Import Decision Tree Classifier
+from sklearn import tree
+
+#Create and fit Decision Tree Classifier
+clf = tree.DecisionTreeClassifier().fit(X_train, y_train)
+
+#Create predictions of Decision Tree Classifier
+clf_y_pred =  clf.predict(X_test)
+
+#Print confusion matrix and classification report
+print(confusion_matrix(y_test, clf_y_pred))
+print(classification_report(y_test, clf_y_pred))
+```
+## Containers
+
+### Created an underlying system for moving containers and checking whether the move is legal<a id="environmentcode"></a>
+[Source File](Notebooks/DQNCompare.ipynb)
+```py
+class Environment:
+    def __init__(self, size, posreward = 2, negreward = -2, maxPriority = 4):
+        self.size = size
+        self.environment = np.array([[[0] * self.size[2]] * self.size[1]] * self.size[0])
+        self.posreward = posreward
+        self.negreward = negreward
+        self.action_space = size[0]
+        self.input_space = size[0]*(maxPriority+1)+1
+        self.priorityMax = maxPriority
+        
+    def resetField(self):
+        self.environment = np.array([[[0] * self.size[2]] * self.size[1]] * self.size[0])
+        
+    def resetEnvironment(self):
+        self.resetField()
+        self.score = 0
+        self.done = False
+    
+    def GenerateEnvironment(self):
+        return np.array([[[0] * self.size[2]] * self.size[1]] * self.size[0])
+        temp = np.array([[[0] * self.size[2]] * self.size[1]] * self.size[0])
+        maxcont = self.size[0] * self.size[2]
+        for i in range(self.size[1]):
+            for o in range(np.random.randint(maxcont*0.65,maxcont)):
+                actionPos = self.checkValidPositionInRow(temp,i)
+                temp[actionPos] = 1
+        return temp
+    
+    
+    #TODO: Voeg een boolean output toe van welke rows al vol zitten en welke niet.
+    def genObs(self, env, containerType = 1, flattened = True, normalized = False):
+        #Count amount of open containers per row.
+        outputlist = np.zeros((self.priorityMax+1,self.size[0]),dtype=np.float32)
+
+        for i in range(self.priorityMax):
+            outputlist[i] = (env == i).sum(axis=2).sum(axis=1)
+        
+        outputlist[-1] = (env != 0).sum(axis=2).sum(axis=1) == np.prod(env.shape[1:3])
+        
+        if normalized:
+            outputlist[:-1] /= np.prod(env.shape[1:3])
+        
+        
+        if flattened:
+            return np.concatenate((outputlist.flatten(), np.array([containerType],dtype=np.float32)))
+        else:
+            return [outputlist,containerType]
+    
+    def step(self, env, action, priority = 1):
+        #actionspace = y
+        
+        
+        #Save Old State
+        newState = env.copy()
+        actionPos = self.checkValidPositionInRow(env, action)
+        
+        done = False
+        
+        #Make move
+        if self.placeContainer(actionPos, newState):
+            newState[actionPos] = priority
+            reward = self.getRewardList(env, priority)[action]
+        else:
+            reward = np.prod(env.shape[1:3]) * -2
+            done = True
+            self.done = True
+
+        #End game if field is all filled.
+        if np.all(newState != 0):
+            done = True
+            self.done = True
+        return newState, reward, done
+    
+    def placeContainer(self, pos, env):
+        if self.isLegal(pos, env):
+            return True
+        else:
+            return False
+        
+    def isLegal(self, pos, env):
+        IO = self.isOccupied(pos, env)
+        IF = self.isFloating(pos, env)
+        IIE = self.posIsInEnv(pos, env)
+        NAS = self.hasNorthAndSouth(pos, env)
+        return not IO and not IF and IIE and not NAS
+    
+    def isOccupied(self, pos, env):
+        if self.posIsInEnv(pos, env):
+            return env[pos] != 0
+        else:
+            return False
+    
+    def hasNorthAndSouth(self, pos, env):
+        NC = self.isOccupied((pos[0],pos[1]-1,0), env)
+        SC = self.isOccupied((pos[0],pos[1]+1,0), env)
+        return NC and SC
+    
+    def posIsInEnv(self, pos, env):
+        x = 0 <= pos[0] < env.shape[0]
+        y = 0 <= pos[1] < env.shape[1]
+        z = 0 <= pos[2] < env.shape[2]  
+        return x and y and z
+    
+    def isFloating(self, pos, env):
+        return np.any(env[pos[0],pos[1],:pos[2]] == 0)
+    
+    def checkValidPositionInRow(self, env, row):
+        positions = np.dstack(np.where(env[row,:,:] == 0))
+        if positions.size != 0:
+            result = positions[positions[:,:,0] == np.max(positions[:,:,0])][0]
+            
+        else:
+            result = (0,0)
+        return row, result[0], result[1]
+    
+    def getRewardList(self,env,containerPriority):
+        obs = self.genObs(env,containerPriority,flattened=False)
+        #
+        emptyRows = obs[0][0] == np.prod(env.shape[1:3])
+        amtRows = obs[0][1:-1].sum(axis=0)
+        prioRows = obs[0][1:-1]
+        fullRows = obs[0][-1]
+        containerRow = prioRows[containerPriority-1]
+        ratioRow = containerRow/amtRows
+        ratioRow[ratioRow == np.inf] = 0
+        ratioRow[np.isnan(ratioRow)] = 0
+        #print(fullRows)
+        result = ratioRow+emptyRows/2
+        #result[fullRows] = 0
+        result *= fullRows*-1 + 1
+        #print(result)
+        
+        #result = obs[0][1:-1].sum(axis=0) * (obs[0][-1]+1) - np.prod(env.shape[1:3]) * (obs[0][-1]*-1) + emptyRows
+        
+        return result
+```
+### Created a function that converts list of containers to maps based on legality, height and priority<a id="funcmaps"></a>
+[Source File](Notebooks/HeightMap.ipynb)
+```py
+def GenerateHeightMap(Environment):
+    return (Environment != '0').sum(axis=2)
+
+def GeneratePrioMap(Environment):
+    HeightMap = GenerateHeightMap(Environment)
+    tempMapArr= np.empty(Environment.shape[0:2],dtype='<U1')
+    it = np.nditer(HeightMap,["f_index","multi_index"])
+    for i in it:
+        tempMapArr[it.multi_index[0]][it.multi_index[1]] = Environment[it.multi_index[0], it.multi_index[1], i-1]
+    return tempMapArr
+
+def GenerateLegalMap(Environment):
+    HeightMap = GenerateHeightMap(Environment)
+    legalHeightMove = HeightMap != Environment.shape[2]
+    heightNorthandSouth = NorthSouthCheck(HeightMap)
+    return np.logical_and(legalHeightMove, heightNorthandSouth)
+```
+
+### Created a scoring metric <a id="scoringmetric"></a>
+[Source File](Notebooks/DQNCompare.ipynb)
+```py
+def getRowScore(row, height, priority):
+    side = row[1:] <= priority
+    above = row[0][height:] <= priority
+    total = side.sum() + above.sum()
+    totalcontainers = side.size+above.size
+    return total/totalcontainers
+    
+def getContainerMovementScore(row,pos,prio):
+    right=row[pos[0]:,:]
+    left=np.flip(row[:pos[0]+1,:],axis=0)
+    return max(getRowScore(left,pos[1],prio),getRowScore(right,pos[1],prio))
+
+def rowScore(env):
+    totalScore = 0
+    #Per row
+    for row in env:
+        it = np.nditer(row, flags=['multi_index'])
+        for container in it:
+            totalScore += getContainerMovementScore(row,it.multi_index,container)
+
+    return totalScore
+```
 
