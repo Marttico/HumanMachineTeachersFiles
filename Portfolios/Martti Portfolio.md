@@ -122,8 +122,8 @@ This method proved effective since most teammates now know the inns and outs of 
 Here are some tasks I contributed on per project:
 
 **FoodBoost**
-- [Filtered the dataset to drop recipes with nuts](#Nutsfiltercode)
-- [Applied a PCA model on our case](#PCAMissCode)
+- [Filtered the dataset to drop recipes with nuts](#nutsfiltercode)
+- [Applied a PCA model on our case](#pcamisscode)
 - [Thought of a way to structure data for the final model](Notebooks/foodboostFinal.ipynb)
 - [Created a profile generator based on labels](#profilegencode)
 - [Created the first Decision Tree Classifier we trained](#dtccode)
@@ -453,7 +453,7 @@ For our paper I wrote ``insert part here``: link to paper
 # Code snippets for contributions
 ## FoodBoost
 
-### <a id="Nutsfiltercode"></a>Filtered the dataset to drop recipes with nuts
+### <a id="nutsfiltercode"></a>Filtered the dataset to drop recipes with nuts
 [Source File](Notebooks/foodboostFinal.ipynb)
 ```py
 def filterFunc(inputString):
@@ -468,7 +468,7 @@ def filterFunc(inputString):
     return False
 ```
 
-### <a id="PCAMissCode"></a>Applied a PCA model on our case
+### <a id="pcamisscode"></a>Applied a PCA model on our case
 [Source File](Notebooks/pca.ipynb)
 ```py
 def PCAMiss(X_missings, m = 2, maxIter = 1000, debug = False, exitPower = -6):
