@@ -702,7 +702,7 @@ def GenerateLegalMap(Environment):
     return np.logical_and(legalHeightMove, heightNorthandSouth)
 ```
 
-### Created a scoring metric <a id="scoringmetric"></a>
+### <a id="scoringmetric"></a>Created a scoring metric 
 [Source File](Notebooks/DQNCompare.ipynb)
 ```py
 def getRowScore(row, height, priority):
