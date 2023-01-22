@@ -446,7 +446,7 @@ Container
 
 
 ## Paper
-For our paper I wrote ``insert part here``: link to paper
+For our paper I wrote ``Methodiek`` and ``Resultaten``: link to paper
 
 
 
