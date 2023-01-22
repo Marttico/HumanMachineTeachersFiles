@@ -453,7 +453,7 @@ For our paper I wrote ``insert part here``: link to paper
 # Code snippets for contributions
 ## FoodBoost
 
-### Filtered the dataset to drop recipes with nuts<a id="Nutsfiltercode"></a>
+### <a id="Nutsfiltercode"></a>Filtered the dataset to drop recipes with nuts
 [Source File](Notebooks/foodboostFinal.ipynb)
 ```py
 def filterFunc(inputString):
@@ -468,7 +468,7 @@ def filterFunc(inputString):
     return False
 ```
 
-### Applied a PCA model on our case<a id="PCAMissCode"></a>
+### <a id="PCAMissCode"></a>Applied a PCA model on our case
 [Source File](Notebooks/pca.ipynb)
 ```py
 def PCAMiss(X_missings, m = 2, maxIter = 1000, debug = False, exitPower = -6):
@@ -504,7 +504,7 @@ def PCAMiss(X_missings, m = 2, maxIter = 1000, debug = False, exitPower = -6):
     print("\n\n\nError: Reached end of max iterations without converging to successful model.")
 ```
 
-### Created a profile generator based on labels<a id="profilegencode"></a>
+### <a id="profilegencode"></a>Created a profile generator based on labels
 [Source File](Notebooks/userdatagenerationfoodboost.ipynb)
 ```py
 #Wel (Italiaans)
@@ -524,7 +524,7 @@ y = pd.DataFrame(data = [1] * 30+[0] * 30)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33)#, random_state=42)
 ```
 
-### Created the first Decision Tree Classifier we trained<a id="dtccode"></a>
+### <a id="dtccode"></a>Created the first Decision Tree Classifier we trained
 [Source File](Notebooks/foodboostFinal.ipynb)
 ```py
 #Import Decision Tree Classifier
@@ -542,7 +542,7 @@ print(classification_report(y_test, clf_y_pred))
 ```
 ## Containers
 
-### Created an underlying system for moving containers and checking whether the move is legal<a id="environmentcode"></a>
+### <a id="environmentcode"></a>Created an underlying system for moving containers and checking whether the move is legal
 [Source File](Notebooks/DQNCompare.ipynb)
 ```py
 class Environment:
@@ -681,7 +681,7 @@ class Environment:
         
         return result
 ```
-### Created a function that converts list of containers to maps based on legality, height and priority<a id="funcmaps"></a>
+### <a id="funcmaps"></a>Created a function that converts list of containers to maps based on legality, height and priority
 [Source File](Notebooks/HeightMap.ipynb)
 ```py
 def GenerateHeightMap(Environment):
