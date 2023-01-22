@@ -25,7 +25,7 @@ This is Martti Groenens portfolio for Applied Data Science. This is where I docu
 - [5. Communication](#communication)
   - [Presentations](#presentations)
   - [Paper](#paper)
-
+- [Code snippets for contributions](#codesnippets)
 ---
 
 # <a id="obligatory-criteria"></a>Obligatory Criteria
@@ -449,7 +449,7 @@ For our paper I wrote ``Methodiek`` and ``Resultaten``: link to paper
 
 
 
-# Code snippets for contributions
+# <a id="codesnippets"></a>Code snippets for contributions 
 ## FoodBoost
 
 ### <a id="nutsfiltercode"></a>Filtered the dataset to drop recipes with nuts
