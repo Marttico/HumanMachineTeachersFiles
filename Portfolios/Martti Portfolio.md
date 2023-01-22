@@ -288,8 +288,8 @@ Together with Jesse we created a third iteration. This iteration used roughly th
 ### Fourth iteration
 
 The Fourth iteration seemed to perform way better than all previous iterations. We got a suggestion from ``Jeroen Vuurens`` that, instead of using a 2D heightmap, or a 3D matrix. We should use something that seperates the rows (X-axis) from the columns (Y-axis) and stacks (Z-axis). Using that clue, I created an environment that would allow the agent to choose between rows. Instead of choosing exactly where to put the container, I only let our agent choose which row to put it in, and the rest was handled by my environment. This approach ended up working really well. The training graph of this final approach is shown in the graph below.
-
-  ![Graph of Fourth Iteration](images/FourthIterGraph.png)
+  
+  <img src="images/FourthIterGraph.png" height=400px><br>
 
 There are two features to this graph that need some explaining. First off the theoretical maximum is based on the absolute maximum score that our environment can put out. Our model will never be able to score beyond that value. Secondly, these 79200 games took around one and a half hours to complete. This may seem long, however, this does not impact the eventual prediction speed.
 
