@@ -25,7 +25,6 @@ This is Martti Groenens portfolio for Applied Data Science. This is where I docu
 - [5. Communication](#communication)
   - [Presentations](#presentations)
   - [Paper](#paper)
-  - [Feedback](#feedback)
 
 ---
 
