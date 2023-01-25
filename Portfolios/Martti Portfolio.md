@@ -445,7 +445,7 @@ Container
 
 
 ## Paper
-For our paper I wrote ``Methodiek`` and ``Resultaten``: link to paper
+For our paper I wrote ``Methodiek`` and ``Resultaten``: [link to paper](https://dehaagsehogeschool.sharepoint.com/:w:/s/MinorAppliedDataScience2022_groups-Team5/EWa_vmeHEzxKok0ptnkZaHMB5u7IAl3rxeWvj7lay1eyrQ?e=bypev3)
 
 
 
